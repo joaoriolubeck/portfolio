@@ -48,6 +48,16 @@ window.SITE = {
   // Unter jedem Projekt Links zum vorherigen/nächsten Projekt anzeigen
   projectNav: true,
 
+  // Eigener Mauszeiger (nur am Computer, auf Handy/Tablet automatisch aus)
+  //   blend: "multiply" | "screen" | "difference" | "exclusion" | "normal" …
+  cursor: {
+    enabled: true,
+    color: "#1f5bff",
+    size: 14,          // Durchmesser in px
+    hoverSize: 44,     // Größe über Links und Projekten
+    blend: "multiply"
+  },
+
   // Fußzeile (leer lassen = keine Fußzeile). HTML erlaubt.
   footer: "",
 
@@ -58,7 +68,7 @@ window.SITE = {
     about: {
       title: "About",
       background: {
-        image: "assets/images/about/background.jpg",
+        image: "https://cdn.myportfolio.com/fdcb86e4-5441-46ef-9692-b5d292f7d37f/9168e3c6-54da-43c1-81ac-3b9fdff54e90_rwc_12x0x1905x1080x4096.jpg?h=3f0b3bfa2814f42aa9e5cc2faf8ac4ce",
         overlay: 0.9,
         position: "top left",
         color: "#000"
@@ -77,7 +87,7 @@ window.SITE = {
     contact: {
       title: "Contact",
       background: {
-        image: "assets/images/contact/background.jpg",
+        image: "https://cdn.myportfolio.com/fdcb86e4-5441-46ef-9692-b5d292f7d37f/0a05bdbf-4800-4d1b-b972-1c4668dc0ccf_rwc_0x0x1099x703x4096.jpg?h=d18058db54cfa02d587ced727ac1000f",
         overlay: 0.9,
         position: "center"
       },
