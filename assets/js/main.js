@@ -35,7 +35,12 @@
 
   /* ---------------------------------------------------------------- Global */
   document.documentElement.lang = S.lang || "de";
-  if (S.background) document.documentElement.style.setProperty("--bg-image", `url("${S.background}")`);
+  // Pfad absolut machen: relative url() in CSS-Variablen würden sonst relativ zu
+  // assets/css/style.css aufgelöst (→ Bild nicht gefunden).
+  if (S.background) {
+    const bg = new URL(S.background, document.baseURI).href;
+    document.documentElement.style.setProperty("--bg-image", `url("${bg}")`);
+  }
   if (S.favicon && !document.querySelector('link[rel="icon"]')) {
     const l = document.createElement("link");
     l.rel = "icon";
