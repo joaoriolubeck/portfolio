@@ -344,7 +344,7 @@
         color: "#1f5bff",   // Farbe
         size: 14,           // Durchmesser in px
         hoverSize: 44,      // Größe über Links und Projekten
-        blend: "multiply"   // "multiply" | "screen" | "difference" | "normal" …
+        blend: "difference"   // "multiply" | "screen" | "difference" | "normal" …
       },
       S.cursor
     );
