@@ -21,7 +21,22 @@ window.SITE = {
   lang: "de",
 
   favicon: "assets/images/site/favicon.jpg",
-  background: "assets/images/site/background.jpg",
+  /* HINTERGRUND
+     image    = Bild
+     overlay  = wie stark es abgedunkelt wird (0 = gar nicht, 1 = komplett schwarz)
+     position = welcher Bildausschnitt sichtbar ist ("center", "top left", "bottom center" …)
+     color    = Farbe, solange das Bild lädt
+     Jede Seite und jedes Projekt kann eigene Werte mit `background: { … }` setzen.
+     Fehlende Werte werden vom Standard übernommen. */
+  background: {                       // Standard (Work-Seite)
+    image: "assets/images/site/background.jpg",
+    overlay: 0.78,
+    position: "bottom center",
+    color: "#222"
+  },
+  projectBackground: {                // Standard für alle Projektseiten
+    overlay: 0.9
+  },
 
   // Navigation oben links. `page` muss zum data-page-Attribut der HTML-Datei passen.
   nav: [
@@ -42,6 +57,12 @@ window.SITE = {
   pages: {
     about: {
       title: "About",
+      background: {
+        image: "assets/images/about/background.jpg",
+        overlay: 0.9,
+        position: "top left",
+        color: "#000"
+      },
       modules: [
         {
           type: "text",
@@ -55,6 +76,11 @@ window.SITE = {
 
     contact: {
       title: "Contact",
+      background: {
+        image: "assets/images/contact/background.jpg",
+        overlay: 0.9,
+        position: "center"
+      },
       modules: [
         {
           type: "text",
