@@ -5,8 +5,11 @@
 :root {
   --font: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
+  /* Hintergrund: Bild, Abdunklung, Ausschnitt werden pro Seite in content/site.js gesetzt */
   --bg: #222;                    /* Grundfarbe hinter dem Hintergrundbild */
-  --bg-overlay: rgba(0, 0, 0, 0.78); /* Abdunklung über dem Hintergrundbild */
+  --bg-overlay-color: #000;      /* Farbe der Abdunklung */
+  --bg-overlay: 0.78;            /* Stärke der Abdunklung (0–1) */
+  --bg-position: bottom center;
   --header-scrolled: #222;       /* Header-Farbe beim Scrollen */
 
   --text: #fff;
@@ -55,12 +58,13 @@ body::after {
 body::before {
   background-color: var(--bg);
   background-image: var(--bg-image, none);
-  background-position: bottom center;
+  background-position: var(--bg-position);
   background-size: cover;
 }
 body::after {
   z-index: -1;
-  background: var(--bg-overlay);
+  background: var(--bg-overlay-color);
+  opacity: var(--bg-overlay);
 }
 
 img { max-width: 100%; vertical-align: top; border: 0; }
