@@ -335,10 +335,67 @@
     });
   }
 
+  /* ---------------------------------------------------------------- Eigener Mauszeiger */
+  function initCursor() {
+    // Standardwerte – können in content/site.js mit `cursor: { … }` überschrieben werden
+    const c = Object.assign(
+      {
+        enabled: true,
+        color: "#1f5bff",   // Farbe
+        size: 14,           // Durchmesser in px
+        hoverSize: 44,      // Größe über Links und Projekten
+        blend: "multiply"   // "multiply" | "screen" | "difference" | "normal" …
+      },
+      S.cursor
+    );
+    if (!c.enabled) return;
+    // Nur bei echter Maus (nicht auf Touch-Geräten)
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const root = document.documentElement;
+    root.classList.add("has-custom-cursor");
+    if (c.color) root.style.setProperty("--cursor-color", c.color);
+    if (c.size) root.style.setProperty("--cursor-size", `${c.size}px`);
+    if (c.blend) root.style.setProperty("--cursor-blend", c.blend);
+    const scaleHover = c.hoverSize && c.size ? c.hoverSize / c.size : 3;
+    root.style.setProperty("--cursor-hover-scale", String(scaleHover));
+
+    const dot = document.createElement("div");
+    dot.className = "cursor-dot";
+    dot.setAttribute("aria-hidden", "true");
+    document.body.appendChild(dot);
+
+    let x = -100, y = -100, raf = null;
+    const draw = () => {
+      dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      raf = null;
+    };
+    const interactive = "a, button, [data-lb], label, input, textarea, select";
+
+    document.addEventListener("mousemove", (e) => {
+      x = e.clientX;
+      y = e.clientY;
+      dot.classList.add("is-visible");
+      if (!raf) raf = requestAnimationFrame(draw);
+    }, { passive: true });
+
+    document.addEventListener("mouseover", (e) => {
+      // Über eingebetteten Videos (iframes) bekommt die Seite keine Mausdaten → ausblenden
+      if (e.target.tagName === "IFRAME") return dot.classList.remove("is-visible");
+      dot.classList.toggle("is-hover", !!e.target.closest(interactive));
+    });
+    document.addEventListener("mouseout", (e) => {
+      if (!e.relatedTarget) dot.classList.remove("is-visible");
+    });
+    document.addEventListener("mousedown", () => dot.classList.add("is-down"));
+    document.addEventListener("mouseup", () => dot.classList.remove("is-down"));
+  }
+
   /* ---------------------------------------------------------------- Start */
   renderHeader();
   if (page === "work") renderWork();
   else if (page === "project") renderProject();
   else renderSimplePage(page);
   renderFooter();
+  initCursor();
 })();
