@@ -35,11 +35,21 @@
 
   /* ---------------------------------------------------------------- Global */
   document.documentElement.lang = S.lang || "de";
-  // Pfad absolut machen: relative url() in CSS-Variablen würden sonst relativ zu
-  // assets/css/style.css aufgelöst (→ Bild nicht gefunden).
-  if (S.background) {
-    const bg = new URL(S.background, document.baseURI).href;
-    document.documentElement.style.setProperty("--bg-image", `url("${bg}")`);
+  /* Hintergrund pro Seite: Standard (S.background) + ggf. Projekt-Standard
+     (S.projectBackground) + eigene Werte der Seite/des Projekts. */
+  function applyBackground(...layers) {
+    const norm = (b) => (typeof b === "string" ? { image: b } : b || {});
+    const bg = Object.assign({}, ...layers.map(norm));
+    const root = document.documentElement.style;
+    if (bg.image) {
+      // Pfad absolut machen: relative url() in CSS-Variablen würden sonst relativ
+      // zu assets/css/style.css aufgelöst (→ Bild nicht gefunden).
+      const url = new URL(bg.image, document.baseURI).href;
+      root.setProperty("--bg-image", `url("${url}")`);
+    }
+    if (bg.overlay !== undefined) root.setProperty("--bg-overlay", String(bg.overlay));
+    if (bg.position) root.setProperty("--bg-position", bg.position);
+    if (bg.color) root.setProperty("--bg", bg.color);
   }
   if (S.favicon && !document.querySelector('link[rel="icon"]')) {
     const l = document.createElement("link");
@@ -109,6 +119,7 @@
 
   /* ---------------------------------------------------------------- Work-Raster */
   function renderWork() {
+    applyBackground(S.background);
     setMeta("", S.description);
     app.innerHTML = `
       <h1 class="visually-hidden">${esc(S.title)} – Work</h1>
@@ -214,6 +225,7 @@
     const slug = new URLSearchParams(location.search).get("p");
     const i = S.projects.findIndex((p) => p.slug === slug);
     const p = S.projects[i];
+    applyBackground(S.background, S.projectBackground, p && p.background);
 
     if (!p) {
       setMeta("Nicht gefunden");
@@ -243,6 +255,7 @@
   /* ---------------------------------------------------------------- Einfache Seiten */
   function renderSimplePage(key) {
     const pg = S.pages[key];
+    applyBackground(S.background, pg && pg.background);
     if (!pg) return;
     setMeta(pg.title, pg.description);
     const { html, images } = renderModules(pg.modules, pg.title);
