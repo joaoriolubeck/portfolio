@@ -53,9 +53,9 @@ window.SITE = {
   cursor: {
     enabled: true,
     color: "#1f5bff",
-    size: 14,          // Durchmesser in px
-    hoverSize: 44,     // Größe über Links und Projekten
-    blend: "multiply"
+    size: 16,          // Durchmesser in px
+    hoverSize: 30,     // Größe über Links und Projekten
+    blend: "difference"
   },
 
   // Fußzeile (leer lassen = keine Fußzeile). HTML erlaubt.
