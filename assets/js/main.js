@@ -342,8 +342,8 @@
       {
         enabled: true,
         color: "#1f5bff",   // Farbe
-        size: 14,           // Durchmesser in px
-        hoverSize: 44,      // Größe über Links und Projekten
+        size: 16,           // Durchmesser in px
+        hoverSize: 30,      // Größe über Links und Projekten
         blend: "difference"   // "multiply" | "screen" | "difference" | "normal" …
       },
       S.cursor
